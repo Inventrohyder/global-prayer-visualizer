@@ -42,9 +42,8 @@ jobs:
           branch: gh-pages
           folder: dist
           clean: true
-          clean-exclude: |
-            previews
-            previews/**
+          clean-exclude: pr-preview/
+          force: false
 
       - name: Verify main site URL is reachable
         run: |

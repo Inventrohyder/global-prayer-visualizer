@@ -29,28 +29,25 @@ This repo supports both:
 2. Ensure GitHub Actions are enabled for the repository.
 3. In **Settings → Pages**, set source to **Deploy from a branch**.
 4. Choose branch **`gh-pages`** and folder **`/(root)`**.
+5. In **Settings → Actions → General**, set workflow permissions to **Read and write permissions**.
 
-### Is GitHub Pages possible for PR previews?
+### Why this setup
 
-Yes. It works by publishing each PR build into a subfolder on `gh-pages`:
+PR previews now use [`rossjrw/pr-preview-action`](https://github.com/marketplace/actions/deploy-pr-preview), which is purpose-built for GitHub Pages PR previews and handles deploy/update/cleanup (`closed`) automatically.
 
-- `previews/pr-<PR_NUMBER>/`
-- URL: `https://<username>.github.io/<repo-name>/previews/pr-<PR_NUMBER>/`
+### PR preview URLs
 
-The workflows now include a post-deploy URL check (with retries). If Pages is misconfigured, the job fails with a clear error instead of silently passing.
+- Preview path format: `pr-preview/pr-<PR_NUMBER>/`
+- URL: `https://<username>.github.io/<repo-name>/pr-preview/pr-<PR_NUMBER>/`
 
-> Security note: automatic preview deploy is restricted to PRs opened from the same repository (not forks).
+### Main deployment compatibility
 
-### Manual backfill / repair for an existing PR preview
+Main deployment keeps PR previews intact using:
 
-If a preview URL returns 404 (for example, old PRs before this workflow existed), run:
+- `clean-exclude: pr-preview/`
+- `force: false`
 
-- **Actions → PR Preview → Run workflow**
-- set:
-  - `pr_number` (e.g., `1`)
-  - `ref` (branch name or commit SHA to build)
-
-This republishes `previews/pr-<PR_NUMBER>/` without merging.
+so PR preview content is not overwritten.
 
 ### Main deployment URL
 

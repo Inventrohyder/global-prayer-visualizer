@@ -2,17 +2,9 @@ name: PR Preview
 
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
-  workflow_dispatch:
-    inputs:
-      pr_number:
-        description: Pull request number to (re)deploy preview for
-        required: true
-        type: string
-      ref:
-        description: Git ref (branch/SHA) to build for manual preview
-        required: true
-        type: string
+    types: [opened, reopened, synchronize, closed]
+
+concurrency: preview-${{ github.ref }}
 
 permissions:
   contents: write
@@ -20,65 +12,42 @@ permissions:
 
 jobs:
   preview:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
-      PR_NUMBER: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}
-      PREVIEW_PATH: previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}
-      VITE_BASE_PATH: /${{ github.event.repository.name }}/previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}/
-      PREVIEW_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}/
+      VITE_BASE_PATH: /${{ github.event.repository.name }}/pr-preview/pr-${{ github.event.number }}/
     steps:
       - name: Checkout PR code
         uses: actions/checkout@v4
-        with:
-          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.ref || github.event.pull_request.head.sha }}
 
       - name: Setup Node
+        if: github.event.action != 'closed'
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
       - name: Install
+        if: github.event.action != 'closed'
         run: npm ci
 
       - name: Validate
+        if: github.event.action != 'closed'
         run: |
           npm run lint
           npm run type-check
           npm run test
 
       - name: Build preview
+        if: github.event.action != 'closed'
         run: npm run build
 
-      - name: Deploy preview to gh-pages
-        uses: JamesIves/github-pages-deploy-action@v4
+      - name: Deploy/remove PR preview
+        uses: rossjrw/pr-preview-action@v1
         with:
-          branch: gh-pages
-          folder: dist
-          target-folder: ${{ env.PREVIEW_PATH }}
-          clean: false
-
-      - name: Verify preview URL is reachable
-        run: |
-          for i in {1..20}; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL" || true)
-            if [ "$code" = "200" ]; then
-              echo "Preview is live: $PREVIEW_URL"
-              exit 0
-            fi
-            echo "Attempt $i/20: preview returned HTTP $code; waiting..."
-            sleep 15
-          done
-          echo "::error::Preview URL did not become reachable: $PREVIEW_URL"
-          echo "::error::Check Settings > Pages: source must be gh-pages /(root), and repository/pages visibility settings must allow serving."
-          exit 1
-
-      - name: Comment preview URL
-        if: github.event_name != 'workflow_dispatch'
-        uses: marocchino/sticky-pull-request-comment@v2
-        with:
-          header: pr-preview
-          message: |
-            🚀 PR preview deployed and verified:
-            ${{ env.PREVIEW_URL }}
+          source-dir: ./dist/
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto
+          wait-for-pages-deployment: true
+          qr-code: false
