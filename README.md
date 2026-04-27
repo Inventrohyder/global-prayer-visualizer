@@ -29,9 +29,9 @@ This repo supports both:
 2. Ensure GitHub Actions are enabled for the repository.
 3. Workflow will auto-configure Pages source to `gh-pages` branch.
 
-### PR preview URLs
+### PR preview URLs (no merge required)
 
-- On each PR update, Actions deploys to:
+- On each PR update, the PR workflow builds and deploys the PR HEAD commit to:
   - `gh-pages/previews/pr-<PR_NUMBER>/`
 - URL pattern:
   - `https://<username>.github.io/<repo-name>/previews/pr-<PR_NUMBER>/`
@@ -43,7 +43,9 @@ This repo supports both:
 If a preview URL returns 404 (for example, old PRs before this workflow existed), run:
 
 - **Actions → PR Preview → Run workflow**
-- set `pr_number` (e.g., `1`)
+- set:
+  - `pr_number` (e.g., `1`)
+  - `ref` (branch name or commit SHA to build)
 
 This republishes `previews/pr-<PR_NUMBER>/` without merging.
 

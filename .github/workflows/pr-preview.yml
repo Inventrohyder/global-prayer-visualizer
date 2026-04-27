@@ -1,12 +1,16 @@
 name: PR Preview
 
 on:
-  pull_request_target:
+  pull_request:
     types: [opened, synchronize, reopened]
   workflow_dispatch:
     inputs:
       pr_number:
         description: Pull request number to (re)deploy preview for
+        required: true
+        type: string
+      ref:
+        description: Git ref (branch/SHA) to build for manual preview
         required: true
         type: string
 
@@ -24,10 +28,10 @@ jobs:
       PREVIEW_PATH: previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}
       VITE_BASE_PATH: /${{ github.event.repository.name }}/previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}/
     steps:
-      - name: Checkout PR merge ref
+      - name: Checkout PR code
         uses: actions/checkout@v4
         with:
-          ref: refs/pull/${{ env.PR_NUMBER }}/merge
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.ref || github.event.pull_request.head.sha }}
 
       - name: Setup Node
         uses: actions/setup-node@v4
