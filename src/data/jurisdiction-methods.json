@@ -1,0 +1,18 @@
+[
+  {"jurisdictionId":"sa-default","countryIsoA3":"SAU","name":"Saudi Arabia","methodId":"umm-al-qura","source":"Official/Documented","confidence":"official"},
+  {"jurisdictionId":"tr-default","countryIsoA3":"TUR","name":"Turkey","methodId":"turkey","source":"Diyanet profile","confidence":"documented"},
+  {"jurisdictionId":"ma-default","countryIsoA3":"MAR","name":"Morocco","methodId":"morocco","source":"Ministry profile","confidence":"documented"},
+  {"jurisdictionId":"eg-default","countryIsoA3":"EGY","name":"Egypt","methodId":"egypt","source":"Survey authority","confidence":"documented"},
+  {"jurisdictionId":"ae-default","countryIsoA3":"ARE","name":"UAE","methodId":"dubai","source":"Documented regional profile","confidence":"inferred"},
+  {"jurisdictionId":"my-default","countryIsoA3":"MYS","name":"Malaysia","methodId":"jakim","source":"JAKIM","confidence":"documented"},
+  {"jurisdictionId":"id-default","countryIsoA3":"IDN","name":"Indonesia","methodId":"kemenag","source":"Kemenag","confidence":"documented"},
+  {"jurisdictionId":"sg-default","countryIsoA3":"SGP","name":"Singapore","methodId":"singapore","source":"MUIS","confidence":"documented"},
+  {"jurisdictionId":"jo-default","countryIsoA3":"JOR","name":"Jordan","methodId":"jordan","source":"Awqaf profile","confidence":"documented"},
+  {"jurisdictionId":"fr-default","countryIsoA3":"FRA","name":"France","methodId":"france","source":"Community profile","confidence":"inferred"},
+  {"jurisdictionId":"ru-default","countryIsoA3":"RUS","name":"Russia","methodId":"russia","source":"Regional profile","confidence":"inferred"},
+  {"jurisdictionId":"kw-default","countryIsoA3":"KWT","name":"Kuwait","methodId":"kuwait","source":"Regional profile","confidence":"inferred"},
+  {"jurisdictionId":"qa-default","countryIsoA3":"QAT","name":"Qatar","methodId":"qatar","source":"Regional profile","confidence":"inferred"},
+  {"jurisdictionId":"tn-default","countryIsoA3":"TUN","name":"Tunisia","methodId":"tunisia","source":"Regional profile","confidence":"inferred"},
+  {"jurisdictionId":"dz-default","countryIsoA3":"DZA","name":"Algeria","methodId":"algeria","source":"Regional profile","confidence":"inferred"},
+  {"jurisdictionId":"pt-default","countryIsoA3":"PRT","name":"Portugal","methodId":"portugal","source":"Community profile","confidence":"inferred"}
+]
