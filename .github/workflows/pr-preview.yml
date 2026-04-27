@@ -26,6 +26,7 @@ jobs:
       PR_NUMBER: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}
       PREVIEW_PATH: previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}
       VITE_BASE_PATH: /${{ github.event.repository.name }}/previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}/
+      PREVIEW_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}/
     steps:
       - name: Checkout PR code
         uses: actions/checkout@v4
@@ -58,11 +59,26 @@ jobs:
           target-folder: ${{ env.PREVIEW_PATH }}
           clean: false
 
+      - name: Verify preview URL is reachable
+        run: |
+          for i in {1..20}; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL" || true)
+            if [ "$code" = "200" ]; then
+              echo "Preview is live: $PREVIEW_URL"
+              exit 0
+            fi
+            echo "Attempt $i/20: preview returned HTTP $code; waiting..."
+            sleep 15
+          done
+          echo "::error::Preview URL did not become reachable: $PREVIEW_URL"
+          echo "::error::Check Settings > Pages: source must be gh-pages /(root), and repository/pages visibility settings must allow serving."
+          exit 1
+
       - name: Comment preview URL
         if: github.event_name != 'workflow_dispatch'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: pr-preview
           message: |
-            🚀 PR preview deployed:
-            https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/${{ env.PREVIEW_PATH }}/
+            🚀 PR preview deployed and verified:
+            ${{ env.PREVIEW_URL }}

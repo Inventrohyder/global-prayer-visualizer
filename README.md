@@ -30,14 +30,14 @@ This repo supports both:
 3. In **Settings → Pages**, set source to **Deploy from a branch**.
 4. Choose branch **`gh-pages`** and folder **`/(root)`**.
 
-> This is required because setting Pages source via API needs admin-level token permissions not available to standard workflow tokens.
+### Is GitHub Pages possible for PR previews?
 
-### PR preview URLs (no merge required)
+Yes. It works by publishing each PR build into a subfolder on `gh-pages`:
 
-- On each PR update, the PR workflow builds and deploys the PR HEAD commit to:
-  - `gh-pages/previews/pr-<PR_NUMBER>/`
-- URL pattern:
-  - `https://<username>.github.io/<repo-name>/previews/pr-<PR_NUMBER>/`
+- `previews/pr-<PR_NUMBER>/`
+- URL: `https://<username>.github.io/<repo-name>/previews/pr-<PR_NUMBER>/`
+
+The workflows now include a post-deploy URL check (with retries). If Pages is misconfigured, the job fails with a clear error instead of silently passing.
 
 > Security note: automatic preview deploy is restricted to PRs opened from the same repository (not forks).
 
