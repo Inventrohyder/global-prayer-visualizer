@@ -1,0 +1,10 @@
+[
+  { "jurisdictionId": "SAU", "countryIsoA3": "SAU", "name": "Saudi Arabia", "methodId": "umm-al-qura", "source": "documented", "confidence": "official" },
+  { "jurisdictionId": "TUR", "countryIsoA3": "TUR", "name": "Turkey", "methodId": "turkey", "source": "documented", "confidence": "documented" },
+  { "jurisdictionId": "MAR", "countryIsoA3": "MAR", "name": "Morocco", "methodId": "morocco", "source": "documented", "confidence": "documented" },
+  { "jurisdictionId": "ARE", "countryIsoA3": "ARE", "name": "UAE", "methodId": "dubai", "source": "documented", "confidence": "documented" },
+  { "jurisdictionId": "USA", "countryIsoA3": "USA", "name": "United States", "methodId": "isna", "source": "inferred", "confidence": "inferred" },
+  { "jurisdictionId": "GBR", "countryIsoA3": "GBR", "name": "United Kingdom", "methodId": "mwl", "source": "inferred", "confidence": "inferred" },
+  { "jurisdictionId": "MYS", "countryIsoA3": "MYS", "name": "Malaysia", "methodId": "malaysia", "source": "documented", "confidence": "documented" },
+  { "jurisdictionId": "IDN", "countryIsoA3": "IDN", "name": "Indonesia", "methodId": "indonesia", "source": "documented", "confidence": "documented" }
+]

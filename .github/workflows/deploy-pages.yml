@@ -1,0 +1,61 @@
+name: Deploy Main to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      VITE_BASE_PATH: /${{ github.event.repository.name }}/
+      MAIN_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Validate
+        run: |
+          npm run lint
+          npm run type-check
+          npm run test
+
+      - name: Build
+        run: npm run build
+
+      - name: Deploy root site to gh-pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: dist
+          clean: true
+          clean-exclude: pr-preview/
+          force: false
+
+      - name: Verify main site URL is reachable
+        run: |
+          for i in {1..20}; do
+            code=$(curl -s -o /dev/null -w "%{http_code}" "$MAIN_URL" || true)
+            if [ "$code" = "200" ]; then
+              echo "Main site is live: $MAIN_URL"
+              exit 0
+            fi
+            echo "Attempt $i/20: main URL returned HTTP $code; waiting..."
+            sleep 15
+          done
+          echo "::error::Main site URL did not become reachable: $MAIN_URL"
+          echo "::error::Check Settings > Pages: source must be gh-pages /(root), and repository/pages visibility settings must allow serving."
+          exit 1
