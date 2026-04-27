@@ -1,0 +1,14 @@
+:root { color-scheme: dark; font-family: Inter, system-ui, sans-serif; }
+* { box-sizing: border-box; }
+body, html, #root { margin:0; width:100%; height:100%; background:#05080f; color:#eaf0ff; }
+.app-shell { display:flex; width:100%; height:100%; }
+.panel { width:360px; max-width:42vw; background:#0d1220cc; backdrop-filter: blur(8px); border-right:1px solid #223; overflow:auto; padding:12px; }
+.canvas-wrap { flex:1; position:relative; }
+.section { margin-bottom:12px; border:1px solid #223; border-radius:10px; padding:10px; background:#0c1322; }
+.row { display:flex; gap:8px; align-items:center; flex-wrap: wrap; }
+button, select, input { background:#152038; color:#eff3ff; border:1px solid #324; border-radius:8px; padding:6px 8px; }
+label { font-size:12px; opacity:.9; }
+.small { font-size:12px; opacity:.8; }
+.map-canvas, .globe-canvas { width:100%; height:100%; display:block; }
+.badge { padding:2px 6px; border-radius:999px; background:#223; font-size:11px; }
+@media (max-width: 920px){ .app-shell{flex-direction:column;} .panel{width:100%;max-width:none;height:45%;border-right:none;border-bottom:1px solid #223;} }
