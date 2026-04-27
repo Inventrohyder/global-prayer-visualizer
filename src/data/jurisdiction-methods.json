@@ -1,0 +1,30 @@
+{
+  "defaultPolicy": {
+    "jurisdictionId": "fallback-global",
+    "name": "Fallback Global",
+    "methodId": "MWL",
+    "highLatitudeRule": "middle-of-night",
+    "polarCircleResolution": "aqrab-yaum",
+    "source": "Project fallback",
+    "confidence": "fallback"
+  },
+  "countryPolicies": {
+    "SAU": { "jurisdictionId": "sau-national", "countryIsoA3": "SAU", "name": "Saudi Arabia", "methodId": "UMM_AL_QURA", "source": "Documented public practice", "confidence": "documented" },
+    "TUR": { "jurisdictionId": "tur-national", "countryIsoA3": "TUR", "name": "Turkey", "methodId": "TURKEY", "source": "Documented public practice", "confidence": "documented" },
+    "MAR": { "jurisdictionId": "mar-national", "countryIsoA3": "MAR", "name": "Morocco", "methodId": "MOROCCO", "source": "Documented public practice", "confidence": "documented" },
+    "ARE": { "jurisdictionId": "are-national", "countryIsoA3": "ARE", "name": "UAE", "methodId": "DUBAI", "source": "Documented public practice", "confidence": "documented" },
+    "EGY": { "jurisdictionId": "egy-national", "countryIsoA3": "EGY", "name": "Egypt", "methodId": "EGYPT", "source": "Documented public practice", "confidence": "documented" },
+    "PAK": { "jurisdictionId": "pak-national", "countryIsoA3": "PAK", "name": "Pakistan", "methodId": "KARACHI", "source": "Documented public practice", "confidence": "documented" },
+    "MYS": { "jurisdictionId": "mys-national", "countryIsoA3": "MYS", "name": "Malaysia", "methodId": "MALAYSIA", "source": "Documented public practice", "confidence": "documented" },
+    "IDN": { "jurisdictionId": "idn-national", "countryIsoA3": "IDN", "name": "Indonesia", "methodId": "INDONESIA", "source": "Documented public practice", "confidence": "documented" },
+    "SGP": { "jurisdictionId": "sgp-national", "countryIsoA3": "SGP", "name": "Singapore", "methodId": "SINGAPORE", "source": "Documented public practice", "confidence": "documented" },
+    "QAT": { "jurisdictionId": "qat-national", "countryIsoA3": "QAT", "name": "Qatar", "methodId": "QATAR", "source": "Documented public practice", "confidence": "documented" },
+    "KWT": { "jurisdictionId": "kwt-national", "countryIsoA3": "KWT", "name": "Kuwait", "methodId": "KUWAIT", "source": "Documented public practice", "confidence": "documented" },
+    "JOR": { "jurisdictionId": "jor-national", "countryIsoA3": "JOR", "name": "Jordan", "methodId": "JORDAN", "source": "Documented public practice", "confidence": "inferred" },
+    "TUN": { "jurisdictionId": "tun-national", "countryIsoA3": "TUN", "name": "Tunisia", "methodId": "TUNISIA", "source": "Documented public practice", "confidence": "inferred" },
+    "DZA": { "jurisdictionId": "dza-national", "countryIsoA3": "DZA", "name": "Algeria", "methodId": "ALGERIA", "source": "Documented public practice", "confidence": "inferred" },
+    "RUS": { "jurisdictionId": "rus-national", "countryIsoA3": "RUS", "name": "Russia", "methodId": "RUSSIA", "source": "Documented public practice", "confidence": "inferred" },
+    "FRA": { "jurisdictionId": "fra-national", "countryIsoA3": "FRA", "name": "France", "methodId": "FRANCE", "source": "Documented public practice", "confidence": "inferred" },
+    "PRT": { "jurisdictionId": "prt-national", "countryIsoA3": "PRT", "name": "Portugal", "methodId": "PORTUGAL", "source": "Documented public practice", "confidence": "inferred" }
+  }
+}
