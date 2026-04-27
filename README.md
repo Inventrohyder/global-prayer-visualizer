@@ -26,8 +26,8 @@ This repo supports both:
 ### One-time setup
 
 1. Push this repo to GitHub.
-2. In **Settings → Pages**, set **Source** to deploy from **`gh-pages` branch** (root).
-3. Ensure GitHub Actions are enabled for the repository.
+2. Ensure GitHub Actions are enabled for the repository.
+3. Workflow will auto-configure Pages source to `gh-pages` branch.
 
 ### PR preview URLs
 
