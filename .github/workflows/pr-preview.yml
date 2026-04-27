@@ -1,8 +1,14 @@
 name: PR Preview
 
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, synchronize, reopened]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: Pull request number to (re)deploy preview for
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -10,13 +16,17 @@ permissions:
 
 jobs:
   preview:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     env:
-      PREVIEW_PATH: previews/pr-${{ github.event.number }}
-      VITE_BASE_PATH: /${{ github.event.repository.name }}/previews/pr-${{ github.event.number }}/
+      PR_NUMBER: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}
+      PREVIEW_PATH: previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}
+      VITE_BASE_PATH: /${{ github.event.repository.name }}/previews/pr-${{ github.event_name == 'workflow_dispatch' && github.event.inputs.pr_number || github.event.number }}/
     steps:
-      - name: Checkout
+      - name: Checkout PR merge ref
         uses: actions/checkout@v4
+        with:
+          ref: refs/pull/${{ env.PR_NUMBER }}/merge
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -45,6 +55,7 @@ jobs:
           clean: false
 
       - name: Comment preview URL
+        if: github.event_name != 'workflow_dispatch'
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           header: pr-preview

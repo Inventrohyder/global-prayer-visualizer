@@ -18,7 +18,7 @@ npm run preview
 
 ## GitHub Pages previews
 
-Yes — this repo supports both:
+This repo supports both:
 
 - **Main deployment** (after merge to `main`) via `.github/workflows/deploy-pages.yml`
 - **Per-PR preview deployment** via `.github/workflows/pr-preview.yml`
@@ -29,12 +29,23 @@ Yes — this repo supports both:
 2. In **Settings → Pages**, set **Source** to deploy from **`gh-pages` branch** (root).
 3. Ensure GitHub Actions are enabled for the repository.
 
-### How PR previews work
+### PR preview URLs
 
-- On every PR update, Actions builds and deploys to:
+- On each PR update, Actions deploys to:
   - `gh-pages/previews/pr-<PR_NUMBER>/`
-- The workflow posts a sticky PR comment with URL:
+- URL pattern:
   - `https://<username>.github.io/<repo-name>/previews/pr-<PR_NUMBER>/`
+
+> Security note: automatic preview deploy is restricted to PRs opened from the same repository (not forks).
+
+### Manual backfill / repair for an existing PR preview
+
+If a preview URL returns 404 (for example, old PRs before this workflow existed), run:
+
+- **Actions → PR Preview → Run workflow**
+- set `pr_number` (e.g., `1`)
+
+This republishes `previews/pr-<PR_NUMBER>/` without merging.
 
 ### Main deployment URL
 
