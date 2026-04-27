@@ -33,7 +33,9 @@ This repo supports both:
 
 ### Why this setup
 
-PR previews now use [`rossjrw/pr-preview-action`](https://github.com/marketplace/actions/deploy-pr-preview), which is purpose-built for GitHub Pages PR previews and handles deploy/update/cleanup (`closed`) automatically.
+PR previews use [`rossjrw/pr-preview-action`](https://github.com/marketplace/actions/deploy-pr-preview) for deploy/update/cleanup.
+
+Important: `wait-for-pages-deployment` is disabled because the Pages build API is not consistently available for this branch-based deploy mode. Instead, workflow performs direct URL reachability checks via `curl` with retries.
 
 ### PR preview URLs
 
