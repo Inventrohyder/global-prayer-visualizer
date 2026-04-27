@@ -23,11 +23,14 @@ This repo supports both:
 - **Main deployment** (after merge to `main`) via `.github/workflows/deploy-pages.yml`
 - **Per-PR preview deployment** via `.github/workflows/pr-preview.yml`
 
-### One-time setup
+### One-time setup (required)
 
 1. Push this repo to GitHub.
 2. Ensure GitHub Actions are enabled for the repository.
-3. Workflow will auto-configure Pages source to `gh-pages` branch.
+3. In **Settings → Pages**, set source to **Deploy from a branch**.
+4. Choose branch **`gh-pages`** and folder **`/(root)`**.
+
+> This is required because setting Pages source via API needs admin-level token permissions not available to standard workflow tokens.
 
 ### PR preview URLs (no merge required)
 

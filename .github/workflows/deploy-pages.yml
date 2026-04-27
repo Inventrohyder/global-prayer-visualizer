@@ -7,7 +7,6 @@ on:
 
 permissions:
   contents: write
-  pages: write
 
 jobs:
   deploy:
@@ -35,25 +34,6 @@ jobs:
 
       - name: Build
         run: npm run build
-
-      - name: Ensure GitHub Pages is enabled for gh-pages branch
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const source = { branch: 'gh-pages', path: '/' };
-            try {
-              await github.request('PUT /repos/{owner}/{repo}/pages', { owner, repo, source });
-              core.info('Configured Pages source to gh-pages/.');
-            } catch (error) {
-              if (error.status === 404) {
-                await github.request('POST /repos/{owner}/{repo}/pages', { owner, repo, source });
-                core.info('Created Pages site with gh-pages/. source.');
-              } else {
-                throw error;
-              }
-            }
 
       - name: Deploy root site to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
